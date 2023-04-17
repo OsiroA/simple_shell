@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
 * _strtok - This function tokenises a string
 * @ptrtostr: the pointer to the string to be tokenized
@@ -6,7 +6,7 @@
 * string each time the function is called
 * Return: the token broken off
 */
-char *_strtok(char *ptrtostr, char delimiter)
+char *_strtok(char *ptrtostr, char *delimiter)
 {
 	static char *positionptr;
 	char *tokenstarts;
@@ -16,20 +16,20 @@ char *_strtok(char *ptrtostr, char delimiter)
 		positionptr = ptrtostr;
 	}
 
-	if (positionptr == NULL || positionptr == '\0')
+	if (positionptr == NULL || *positionptr == '\0')
 	{
 		return (NULL);
 	}
 
 	tokenstarts = positionptr;
 
-	while (*positionptr != delimiter && *positionptr != '\0')
+	while (*positionptr != *delimiter && *positionptr != '\0')
 	{
 		positionptr++;
 	}
-	if (*positionptr == delimiter)
+	if (*positionptr == *delimiter)
 	{
-		*positionptr == '\0';
+		*positionptr = '\0';
 		positionptr++;
 	}
 	return (tokenstarts);

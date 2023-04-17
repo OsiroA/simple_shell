@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
 * split_string - a function that splits a string into words.
@@ -7,42 +7,46 @@
 * @readl: size of the (str) string.
 * Return: Array of pointers to strings with each element being a word.
 */
-
 char **split_string(char *str, char *delim, ssize_t readl)
 {
 	char **argv;
 	char *copy, *token;
-	int i, ntokens = 0;
+	int i, j, ntokens = 0;
 
+	if (readl <= 1)
+		return (NULL);
 	copy = malloc(sizeof(char) * readl);
 	if (copy == NULL)
 		return (NULL);
 
 	_strcpy(copy, str);
-	token = strtok(str, delim);
+	token = _strtok(str, delim);
 	/* determine how many tokens are there*/
 	while (token != NULL)
-	{
-		ntokens++;
-		token = strtok(NULL, delim);
+	{	ntokens++;
+		token = _strtok(NULL, delim);
 	}
-	ntokens++;
-	argv = malloc(sizeof(char *) * ntokens);
+	argv = malloc(sizeof(char *) * (ntokens + 1));
+	if (argv == NULL)
+	{	free(copy);
+		return (NULL);
+	}
 	/* Store each token in the argv array */
-	token = strtok(copy, delim);
+	token = _strtok(copy, delim);
 	for (i = 0; token != NULL; i++)
-	{
-		argv[i] = malloc(sizeof(char) * _strlen(token));
+	{	argv[i] = malloc(sizeof(char) * (_strlen(token) + 1));
+		if (argv[i] == NULL)
+		{
+			for (j = 0; j < i; j++)
+				free(argv[j]);
+			free(argv);
+			free(copy);
+			return (NULL);
+		}
 		_strcpy(argv[i], token);
-		token = strtok(NULL, delim);
-		_puts(argv[i]);
+		token = _strtok(NULL, delim);
 	}
 	argv[i] = NULL;
 	free(copy);
-	for (i = 0; i < ntokens; i++)
-		free(argv[i]);
-
-	free(argv);
-
 	return (argv);
 }

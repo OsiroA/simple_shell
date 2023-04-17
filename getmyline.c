@@ -1,12 +1,11 @@
-#include "main.h"
+#include "shell.h"
 
 /**
 * my_getline - reads a line from a file descriptor
-* @lineptr: pointer to a buffer to store the line being read.
-* @n: pointer to the size of the buffer.
+* @lineptr: pointer to a buffer to store the line
+* @n: pointer to the size of the buffer
 * @stream: pointer to the file stream to read from
-* Return: On success, the number of bytes read, including the newline.
-* On failure, return -1.
+* Return: On success, the number of bytes read, including the newline
 */
 
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
@@ -30,7 +29,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 		num_bytes += c;
 		if (num_bytes == *n)
 		{
-			tmp = _realloc(*lineptr, *n * 2);
+			tmp = _realloc(*lineptr, *n, (*n) * 2);
 			if (tmp == NULL)
 			{
 				free(lineptr);
@@ -39,6 +38,8 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 			*lineptr = tmp;
 			*n *= 2;
 		}
+		if ((*lineptr)[num_bytes - 1] == '\n')
+			break;
 	}
 	if (num_bytes == 0 && c == EOF)
 		return (-1);

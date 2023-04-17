@@ -10,6 +10,8 @@ int main(void)
 	char *lineptr = NULL;
 	size_t size = 0;
 	ssize_t readline = 0;
+	char **args;
+	int i;
 
 	while (1)
 	{
@@ -23,15 +25,22 @@ int main(void)
 		}
 		readline = _strlen(lineptr);
 		if (readline > 0 && lineptr[readline - 1] == '\n')
-		{
 			lineptr[readline - 1] = '\0';
+
+		args = split_string(lineptr, " ", readline);
+		free(lineptr);
+		lineptr = NULL;
+		size = 0;
+
+		if (args == NULL)
+			return (-1);
+
+		for (i = 0; args[i] != NULL; i++)
+		{
+			_puts(args[i]);
+			free(args[i]);
 		}
-
-		split_string(lineptr, " ", readline);
+		free(args);
 	}
-	free(lineptr);
-	lineptr = NULL;
-	size = 0;
-
 	return (0);
 }
