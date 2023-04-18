@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 char *_which(char *filename)
 {
@@ -35,26 +35,4 @@ char *_which(char *filename)
 	}
 	free(address);
 	return (NULL);
-}
-int main(int argc, char **av)
-{
-	char *filename, *address;
-	int a;
-
-	for (a = 1; a < argc; a++)
-	{
-		filename = av[a];
-		address = _which(filename);
-
-		if (address != NULL)
-		{
-			printf("%s\n", address);
-			free(address);
-		}
-		else
-		{
-			printf("%s not found in PATH\n", filename);
-		}
-	}
-	return (0);
 }

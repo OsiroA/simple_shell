@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * _puts - This function prints a string to stdout
  * @str: a string of characters
