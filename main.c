@@ -11,7 +11,7 @@ int main(void)
 	size_t size = 0;
 	ssize_t readline = 0;
 	char **args;
-	int i;
+	int i, status;
 
 	/* the loop to keep the shell prompt infinitely running*/
 	while (1)
@@ -37,11 +37,15 @@ int main(void)
 		if (args == NULL)
 			return (-1);
 
+		status = _exec(args);
+
+		/*
 		for (i = 0; args[i] != NULL; i++)
 		{
 			_puts(args[i]);
 			free(args[i]);
-		}
+		}*/
+
 		free(args);
 	}
 	return (0);
