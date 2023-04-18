@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 char **split_string(char *str, char *delim, ssize_t readl);
 char *_which(char *filename);
