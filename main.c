@@ -13,10 +13,12 @@ int main(void)
 	char **args;
 	int i;
 
+	/* the loop to keep the shell prompt infinitely running*/
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 		readline = my_getline(&lineptr, &size, stdin);
+		/* error handling for ctrl D*/
 		if (readline == -1)
 		{
 			perror("exit");
