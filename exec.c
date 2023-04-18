@@ -42,3 +42,28 @@ int _exec(char **args)
 	}
 	return (1);
 }
+
+
+
+/**
+*_cd - this function changes the directory 
+* @args: argument passed
+* Return: 0
+*/
+
+int _cd(char **args)
+{
+    if (args[1] == NULL)
+    {
+        perror("Directory name to move into not given");
+    }
+    else if (chdir(args[1]) == 0)
+    {
+        return (0);
+    }
+    else
+    {
+        perror("Could not change into the specified directory");
+    }
+    return (0);
+}
