@@ -6,13 +6,21 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-extern char **environ;
 
+
+void help_cmd();
+void exit_cmd(char **args);
+void cd_cmd(char **args);
+
+extern char **environ;
+int _atoi(char *s);
+int _strcmp(const char *s1, const char *s2);
+char *_getenv(const char *enVar);
+char *_strcat(char *dest, char *src);
+char *_strdup(char *str);
+char *find_command(char *cmd);
 int _exec(char **args);
-int _cd(char **args);
-int _help(char **args);
 int element_counter(void);
-int my_exit(char **args);
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 char **split_string(char *str, char *delim, ssize_t readl);
 char *_which(char *filename);

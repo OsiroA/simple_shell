@@ -11,7 +11,6 @@ int main(void)
 	size_t size = 0;
 	ssize_t readline = 0;
 	char **args;
-	int i, status;
 
 	/* the loop to keep the shell prompt infinitely running*/
 	while (1)
@@ -36,21 +35,14 @@ int main(void)
 
 		if (args == NULL)
 			return (-1);
-		/* tried adding the cd path here please correct*/
-		else if (args[0] == "cd")
-		{
-			status = _cd(args);
-		}
-
-		status = _exec(args);
-
-		/*
-		for (i = 0; args[i] != NULL; i++)
-		{
-			_puts(args[i]);
-			free(args[i]);
-		}*/
-
+		if (_strcmp(args[0], "cd") == 0)
+			cd_cmd(args);
+		else if (_strcmp(args[0], "help") == 0)
+			help_cmd();
+		else if (strcmp(args[0], "exit") == 0)
+			exit_cmd(args);
+		else
+			_exec(args);
 		free(args);
 	}
 	return (0);

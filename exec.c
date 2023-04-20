@@ -1,133 +1,80 @@
 #include "shell.h"
 
 /**
-* _exec - This function executes a function,
-* checks for builtins and launches the process
-* @args: arguments
-* Return: 1 if success
+* find_command - function to search for a command in the PATH.
+* @cmd: pointer to a string.
+* Return: the full path of the command.
 */
+
+char *find_command(char *cmd)
+{
+	char *dir = NULL, *fullPath = NULL;
+	char *path = _getenv("PATH");
+
+	if (path == NULL)
+	{
+		perror("PATH not found");
+		exit(EXIT_FAILURE);
+	}
+	dir = _strtok(path, ":");
+	while (dir != NULL)
+	{
+		fullPath = malloc(_strlen(dir) + _strlen(cmd) + 2);
+		_strcpy(fullPath, dir);
+		_strcat(fullPath, "/");
+		_strcat(fullPath, cmd);
+		if (access(fullPath, X_OK) == 0)
+		{
+			free(cmd);
+			return (fullPath);
+		}
+		free(fullPath);
+		dir = _strtok(NULL, ":");
+	}
+	perror("command not found");
+	exit(EXIT_FAILURE);
+}
+
+/**
+* _exec -  Function to execute a command with arguments.
+* @args: pointer to an array of strings.
+* Return: integer status code or -1
+*/
+
 int _exec(char **args)
 {
-	pid_t childprocess;
-	int a;
+	pid_t pid;
+	int status;
+	char *cmd = NULL, *fullPath = NULL;
 
-	childprocess = fork();
-
-	/* error handling for if the execve fails*/
-	if (childprocess == 0)
-	{
-		execve(args[0], args, environ);
-		perror("./shell");
-		exit(1);
-	}
-	/* telling the parent process to wait for the child process*/
-	else if (childprocess > 0)
-	{
-		wait(&a);
-		if (WIFEXITED(a))
-		{
-			return (1);
+	pid = fork();
+	if (pid == 0)
+	{	/* child process */
+		if (access(args[0], X_OK) == 0)
+		{	/* execute the command using execve */
+			execve(args[0], args, environ);
+			perror(args[0]);
+			exit(EXIT_FAILURE);
 		}
 		else
-		{
-			perror("Child process terminated abnormally");
-			return (-1);
+		{	/* find the command in the PATH */
+			cmd = _strdup(args[0]);
+			fullPath = find_command(cmd);
+			/* execute the command using execve */
+			execve(fullPath, args, environ);
+			perror(fullPath);
+			free(fullPath);
+			free(cmd);
+			exit(EXIT_FAILURE);
 		}
 	}
-	/* error handling for if forking fails*/
-	else
-	{
-		perror("Couldn't fork");
-		return (-1);
+	else if (pid > 0)
+	{	/* parent process */
+		do {
+			waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-	return (1);
-}
-
-
-
-/**
-*_cd - this function changes the directory 
-* @args: argument passed
-* Return: 0
-*/
-
-int _cd(char **args)
-{
-    if (args[1] == NULL)
-    {
-        perror("Directory name to move into not given");
-    }
-    else if (chdir(args[1]) == 0)
-    {
-        return (0);
-    }
-    else
-    {
-        perror("Could not change into the specified directory");
-    }
-    return (0);
-}
-
-/**
-* my_exit - this function is a builtin function to exit the shell
-* @args: the string passed into the function
-*Return: void
-*/
-int my_exit(char **args)
-{
-	exit(98);
-	return (0);
-}
-
-/**
-* _help - This function shows the lisrt of available builtins when called
-* @args: the string to be passed in
-* Return: 0 if success
-*/
-int _help(char **args)
-{
-	char *help;
-
-	help =
-		"The commands below can be used in our shell:\n"
-		" exit: This is used to exit the shell;\n"
-		" help: This prints this particular manual you are reading\n"
-		" cd: This changes the current working directory to a specified one\n";
-	
-	_puts("help");
-}
-
-/**
-* our_builtinfunctions - This is a struct containing the association
-* between a command name and the function it handles
-*/
-typedef struct
-{
-	char *arg;
-	int (*my_function)(char **args);
-} functions_builtin;
-
-functions_builtin functions[3] = {
-	[0] = {"exit", my_exit},
-	[1] = {"help", _help},
-	[2] = {"cd", _cd}
-};
-
-/**
-* functions[0].arg = "exit";
-* functions[0].my_function = my_exit;
-* functions[1].arg = "help";
-* functions[1].my_function = _help;
-* functions[2].arg = "cd";
-* functions[2].my_function = _cd;
-*/
-
-/**
-* element_counter - Counts the number of elements in the builtin
-* Return: number of elements
-*/
-
-int element_counter(void)
-{
-	return (sizeof(functions) / sizeof(functions_builtin));
+	else
+		return (-1);
+	return (status);
 }
