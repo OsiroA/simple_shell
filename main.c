@@ -7,7 +7,7 @@
 
 int main(void)
 {
-	char *lineptr = NULL;
+	char *lineptr = NULL, *delim = " \t\n";
 	size_t size = 0;
 	ssize_t readline = 0;
 	char **args;
@@ -29,7 +29,7 @@ int main(void)
 		if (readline > 0 && lineptr[readline - 1] == '\n')
 			lineptr[readline - 1] = '\0';
 
-		args = split_string(lineptr, " ", readline);
+		args = split_string(lineptr, delim, readline);
 		free(lineptr);
 		lineptr = NULL;
 		size = 0;
