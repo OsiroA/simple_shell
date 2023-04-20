@@ -36,6 +36,11 @@ int main(void)
 
 		if (args == NULL)
 			return (-1);
+		/* tried adding the cd path here please correct*/
+		else if (args[0] == "cd")
+		{
+			status = _cd(args);
+		}
 
 		status = _exec(args);
 

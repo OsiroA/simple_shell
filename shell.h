@@ -9,6 +9,10 @@
 extern char **environ;
 
 int _exec(char **args);
+int _cd(char **args);
+int _help(char **args);
+int element_counter(void);
+int my_exit(char **args);
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 char **split_string(char *str, char *delim, ssize_t readl);
 char *_which(char *filename);
