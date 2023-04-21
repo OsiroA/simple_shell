@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "shell.h"
 int _path()
 {
     char *pathway = getenv("PATH");

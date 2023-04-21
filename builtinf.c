@@ -8,14 +8,11 @@
 
 void cd_cmd(char **args)
 {
-	if (args[0] == NULL)
+	if (chdir(args[1]) != 0)
 	{
-		perror("cd: missing argument\n");
+		perror("The destination address is invalid");
 	}
-	else if (chdir(args[0]) == -1)
-	{
-		perror("cd");
-	}
+
 }
 
 /**
