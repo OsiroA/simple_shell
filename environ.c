@@ -27,10 +27,33 @@ char *_getenv(const char *enVar)
 			free(keyVal);
 			return (result);
 		}
-
 		free(keyVal);
 		env++;
 	}
 
 	return (NULL);
+}
+
+/**
+* _setenv - This function uses the setenv builtin command to
+* initialize a new environment variable or modify an existin one
+* @value: The desired value
+* Return: void
+*/
+void _setenv(const char *value)
+{
+	const char* variable;
+
+	variable = "our_path";
+	setenv(variable, value, 1);
+}
+
+/**
+* _unsetenv - This function uses the unsetenv to unset a set environment
+* @variable: the variable name passed into the setenv function
+* Return: void
+*/
+void _unsetenv(const char* variable)
+{
+	unsetenv(variable);
 }
