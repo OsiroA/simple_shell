@@ -10,40 +10,40 @@
 
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-	size_t num_bytes = 0;
+	size_t numbytes = 0;
 	ssize_t c;
-	char *tmp;
+	char *newMem;
 
 	if (!lineptr || !n || !stream)
 		return (-1);
 
 	if (*lineptr == NULL)
 	{
-		*n = 128;
+		*n = 140;
 		*lineptr = malloc(*n);
 		if (*lineptr == NULL)
 			return (-1);
 	}
-	while ((c = read(fileno(stream), &(*lineptr)[num_bytes], 1)) > 0)
+	while ((c = read(fileno(stream), &(*lineptr)[numbytes], 1)) > 0)
 	{
-		num_bytes += c;
-		if (num_bytes == *n)
+		numbytes += c;
+		if (numbytes == *n)
 		{
-			tmp = _realloc(*lineptr, *n, (*n) * 2);
-			if (tmp == NULL)
+			newMem = _realloc(*lineptr, *n, (*n) * 2);
+			if (newMem == NULL)
 			{
 				free(lineptr);
 				return (-1);
 			}
-			*lineptr = tmp;
+			*lineptr = newMem;
 			*n *= 2;
 		}
-		if ((*lineptr)[num_bytes - 1] == '\n')
+		if ((*lineptr)[numbytes - 1] == '\n')
 			break;
 	}
-	if (num_bytes == 0 && c == EOF)
+	if (numbytes == 0 && c == EOF)
 		return (-1);
 
-	(*lineptr)[num_bytes] = '\0';
-	return (num_bytes);
+	(*lineptr)[numbytes] = '\0';
+	return (numbytes);
 }

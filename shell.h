@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 
 
-void help_cmd();
+void help_cmd(void);
 void exit_cmd(char **args);
 void cd_cmd(char **args);
 

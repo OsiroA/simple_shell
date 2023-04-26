@@ -42,7 +42,7 @@ char *_getenv(const char *enVar)
 */
 void _setenv(const char *value)
 {
-	const char* variable;
+	const char  *variable;
 
 	variable = "our_path";
 	setenv(variable, value, 1);
@@ -53,7 +53,7 @@ void _setenv(const char *value)
 * @variable: the variable name passed into the setenv function
 * Return: void
 */
-void _unsetenv(const char* variable)
+void _unsetenv(const char *variable)
 {
 	unsetenv(variable);
 }

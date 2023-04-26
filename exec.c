@@ -53,8 +53,11 @@ int _exec(char **args)
 		if (access(args[0], X_OK) == 0)
 		{	/* execute the command using execve */
 			execve(args[0], args, environ);
-			perror(args[0]);
-			exit(EXIT_FAILURE);
+			if (execve(args[0], args, environ) == -1)
+			{
+				perror("execve");
+				exit(EXIT_FAILURE);
+			}
 		}
 		else
 		{	/* find the command in the PATH */
@@ -62,10 +65,13 @@ int _exec(char **args)
 			fullPath = find_command(cmd);
 			/* execute the command using execve */
 			execve(fullPath, args, environ);
-			perror(fullPath);
-			free(fullPath);
-			free(cmd);
-			exit(EXIT_FAILURE);
+			if (execve(fullPath, args, environ) == -1)
+			{
+				perror("execve");
+				free(fullPath);
+				free(cmd);
+				exit(EXIT_FAILURE);
+			}
 		}
 	}
 	else if (pid > 0)
