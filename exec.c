@@ -28,6 +28,7 @@ char *find_command(char *cmd)
 			free(cmd);
 			return (fullPath);
 		}
+
 		free(fullPath);
 		dir = _strtok(NULL, ":");
 	}
@@ -75,7 +76,7 @@ int _exec(char **args)
 		}
 	}
 	else if (pid > 0)
-	{	/* parent process */
+	{	/* The parent process */
 		do {
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));

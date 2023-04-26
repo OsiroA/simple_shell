@@ -11,8 +11,17 @@
 void help_cmd(void);
 void exit_cmd(char **args);
 void cd_cmd(char **args);
+int pipeCheck(char **argv);
+void handle_pipe(char **argv1, char **argv2);
+char **cmd_before_pipe(char **argv);
+void handle_pipes(char **argv);
+char **cmd_after_pipe(char **argv);
+
 
 extern char **environ;
+
+ #define MAX_ARGV 32
+
 int _atoi(char *s);
 int _strcmp(const char *s1, const char *s2);
 char *_getenv(const char *enVar);
