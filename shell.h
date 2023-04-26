@@ -20,8 +20,8 @@ char **cmd_after_pipe(char **argv);
 
 extern char **environ;
 
- #define MAX_ARGV 32
-
+#define MAX_ARGV 32
+#define BUF 1024
 int _atoi(char *s);
 int _strcmp(const char *s1, const char *s2);
 char *_getenv(const char *enVar);

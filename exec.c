@@ -76,7 +76,7 @@ int _exec(char **args)
 		}
 	}
 	else if (pid > 0)
-	{	/* The parent process */
+	{	/* parent process */
 		do {
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
