@@ -14,7 +14,7 @@ int main(int argc  __attribute__((unused)), char **argv)
 	ssize_t rline = 0;
 	pid_t process;
 	char *args[1024], *command = argv[0];
-	int child, status = 1, i = 0;
+	int child, i = 0;
 
 	while (1)
 	{
