@@ -1,17 +1,17 @@
 #include "header.h"
-int main()
+
+int main(int argc  __attribute__((unused)), char **argv)
 {
     char *pointertoline = NULL;
-    /*char *delimiter = " \t\n";*/
+    char *token, *delimiter = " \t\n";
     size_t size = 0;
     ssize_t line = 0;
     pid_t process;
-    char *args[] = {NULL};
-    /**
-    *void(argc);
-    *void(**argv);
-    */
-    int child, status = 1;
+    char *args[1024];
+    char *command = argv[0];
+    extern char **environ;
+
+    int child, status = 1, i = 0;
 
     while (status)
     {
@@ -34,9 +34,16 @@ int main()
             }
             else if (process == 0)
             {
-                if (execve(pointertoline, args, NULL) == -1)
+                token = strtok(pointertoline, delimiter);
+                while (token != NULL)
                 {
-                    perror("Couldn't execute command");
+                    args[i++] = token;
+                    token = strtok(NULL, delimiter);
+                }
+                args[i] = NULL;
+                if (execve(args[0], args, environ) == -1)
+                {
+                    perror(command);
                     exit(EXIT_FAILURE);
                 }
             }
@@ -44,5 +51,6 @@ int main()
                 waitpid(process, &child, 0);
         }
     }
+    free(pointertoline);
     return (0);
 }
