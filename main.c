@@ -48,5 +48,7 @@ int main(int argc, char **argv)
 		}
 		free(argv);
 	}
+	free(lineptr);
+	free(argv);
 	return (0);
 }
