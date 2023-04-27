@@ -33,43 +33,7 @@ int handle_condition(char *lineptr)
 		else
 			_exec(argv);
 	}
-<<<<<<< HEAD
 	free(lineptr);
 	free(argv);
-=======
-	free(argv);
-	return (0);
-}
-
-/**
-* main - entry point for shell
-* Return: 0 on success, -1 on error
-*/
-
-int main(void)
-{
-	ssize_t readline = 0;
-	size_t size = 0;
-	char *args = NULL;
-
-	while (1)
-	{
-		write(STDOUT_FILENO, "$ ", 2);
-		readline = my_getline(&args, &size, stdin);
-		if (readline == -1)
-		{
-			free(args);
-			return (-1);
-		}
-		if (args == NULL || args[0] == '\0' || args[0] == ' ' || args[0] == '\n')
-			continue;
-		if (handle_condition(args) == 1)
-			break;
-		free(args);
-		args = NULL;
-		size = 0;
-	}
-
->>>>>>> e1222e9eaa85383fcd1cfc11c92b0797b0d16973
 	return (0);
 }

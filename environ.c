@@ -32,8 +32,5 @@ char *_getenv(const char *enVar)
 	}
 
 	return (NULL);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> e1222e9eaa85383fcd1cfc11c92b0797b0d16973
+
