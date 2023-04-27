@@ -1,11 +1,14 @@
 #include "header.h"
-int main(int argc, char **argv)
+int main()
 {
     char *pointertoline = NULL;
-    char *delimiter = " \t\n";
+    /*char *delimiter = " \t\n";*/
     size_t size = 0;
     ssize_t line = 0;
-    /*void(argc);*/
+    /**
+    *void(argc);
+    *void(**argv);
+    */
     int status = 1;
 
     while (status)
@@ -19,4 +22,5 @@ int main(int argc, char **argv)
             return (-1);
         }
     }
+    return (0);
 }
