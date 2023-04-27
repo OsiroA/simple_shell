@@ -1,6 +1,5 @@
 #ifndef HEADER_H
 #define HEADER_H
-
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -10,5 +9,4 @@
 #include <sys/wait.h>
 
 int _strlen(char *s);
-
-#endif
+#endif  /* HEADER_H */

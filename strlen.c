@@ -1,9 +1,10 @@
 #include "header.h"
+
 /**
- * _strlen - This function returns the length of a string
- * @s: a character
- * Return: 0
- */
+* _strlen - This function returns the length of a string
+* @s: a character
+* Return: 0
+*/
 int _strlen(char *s)
 {
 	int len = 0;
