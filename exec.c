@@ -32,7 +32,7 @@ char *find_command(char *cmd)
 		free(fullPath);
 		dir = _strtok(NULL, ":");
 	}
-	perror("command not found");
+	perror(cmd);
 	exit(EXIT_FAILURE);
 }
 
@@ -56,7 +56,7 @@ int _exec(char **args)
 			execve(args[0], args, environ);
 			if (execve(args[0], args, environ) == -1)
 			{
-				perror("execve");
+				perror(args[0]);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -68,7 +68,7 @@ int _exec(char **args)
 			execve(fullPath, args, environ);
 			if (execve(fullPath, args, environ) == -1)
 			{
-				perror("execve");
+				perror("fullPath");
 				free(fullPath);
 				free(cmd);
 				exit(EXIT_FAILURE);
