@@ -16,17 +16,18 @@ void prompt(void)
 
 /**
 * main - Entry point of the shell program.
+* @argc: argument count.
+* @argv: pointer to an array of strings.
 * Return: 0 always
 */
 
 int main(int argc, char **argv)
 {
 	char *path, *fullPath, *lineptr;
-	int builtinf_status, status, flag;
+	int builtinf_status, status, flag = 0;
 	(void)argc;
 
 	path = fullPath = lineptr = NULL;
-
 	while (1)
 	{
 		prompt();
@@ -40,16 +41,13 @@ int main(int argc, char **argv)
 			continue;
 		builtinf_status = exe_builtinf(argv);
 		if (builtinf_status == 0 || builtinf_status == -1)
-		{
-			free(argv);
+		{	free(argv);
 			free(lineptr);
 		}
 		if (builtinf_status == 0)
 			continue;
 		if (builtinf_status == -1)
 			exit(0);
-
-		flag = 0;
 		path = _getenv("PATH");
 		fullPath = find_exec(argv[0], fullPath, path);
 		if (fullPath == NULL)
@@ -57,9 +55,7 @@ int main(int argc, char **argv)
 			fullPath = argv[0];
 		}
 		else
-		{
 			flag = 1;
-		}
 
 		status = _exec(fullPath, argv);
 		if (status == -1)

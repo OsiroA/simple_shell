@@ -50,7 +50,6 @@ char *find_exec(char *cmd, char *fullPath, char *path)
 
 	if (!cmd || !path)
 		return (NULL);
-
 	/* Copy the PATH variable to a separate buffer */
 	path = _strdup(path);
 	if (!path)
@@ -66,7 +65,6 @@ char *find_exec(char *cmd, char *fullPath, char *path)
 			free(path);
 			return (NULL);
 		}
-
 		_strcpy(fullPath, token);
 		_strcat(fullPath, "/");
 		_strcat(fullPath, cmd);
@@ -84,7 +82,6 @@ char *find_exec(char *cmd, char *fullPath, char *path)
 		free(fullPath);
 		token = strtok(NULL, ":");
 	}
-
 	/* Command not found */
 	free(path);
 	return (NULL);

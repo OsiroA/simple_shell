@@ -40,7 +40,8 @@ char **envcpy(char **dst, char **src, unsigned int len)
 
 /**
 * _getenv - This function retrieves the value of a given environment variable
-* @str: Pointer to a string representing the name of the environment variable to get.
+* @str: Pointer to a string representing the name of the environment variable
+* to get.
 * Return: double pointer or NULL.
 */
 

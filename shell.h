@@ -23,8 +23,8 @@
 
 typedef struct built
 {
-        char *name;
-        int (*ptr)(void);
+	char *name;
+	int (*ptr)(void);
 } built;
 
 
@@ -35,7 +35,8 @@ void prompt(void);
 int num_builtinf(built builtinf[]);
 char *_readline(FILE *fp);
 void _puts(char *str);
-void free_memory(char **tokens, char *valPath, char *lineptr, char *fullPath, int flag);
+void free_memory(char **tokens, char *valPath, char *lineptr,
+	char *fullPath, int flag);
 void free_doubleP(char **argv, unsigned int n);
 char **split_string(char *str);
 void get_error(int error);
